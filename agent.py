@@ -1,5 +1,6 @@
 import os
 import sys
+from datetime import date
 import anthropic
 from dotenv import load_dotenv
 from tools import tools, handle_tool_call
@@ -20,10 +21,12 @@ Always include: opportunity title, organization, deadline (if found), URL, and a
 """
 
 DAILY_DIGEST_PROMPT = (
+    f"Today's date is {date.today().strftime('%B %d, %Y')}. "
     "Find current art open calls, residencies, grants, and exhibition opportunities "
     "in and around New Jersey, USA. Run at most 3 searches total. Do NOT use "
-    "get_opportunity_details. Compile the search results into a short, clear digest "
-    "and print it. Do NOT send any email."
+    "get_opportunity_details. Only include opportunities with deadlines on or after "
+    "today's date — skip anything already expired. Compile the search results into "
+    "a short, clear digest and print it. Do NOT send any email."
 )
 
 
